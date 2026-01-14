@@ -7,7 +7,7 @@ from ..utils.validators import ensure_mt_constraints, ensure_tts_constraints, en
 # Inline API endpoints - you need to replace these URLs with actual working endpoints
 # Current endpoints are for demonstration - map each to your actual Bhashini API URLs
 
-INLINE_BHASHINI_API_KEY: str = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhlYTc3YzhiOTNlM2JlYzkwMWZkY2I3Iiwicm9sZSI6Im1lZ2F0aG9uX3N0dWRlbnQifQ.ZHdNQlUu_TqRU3KJ4HryvrHqqS4Wfpuii8xyIYMtcso"
+INLINE_BHASHINI_API_KEY: str = "##"
 
 # ==================== TRANSLATION ENDPOINTS ====================
 # These handle text translation between language pairs
