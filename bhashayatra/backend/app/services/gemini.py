@@ -2,7 +2,7 @@ from google import genai
 from ..config import settings
 from typing import Optional
 
-INLINE_GEMINI_API_KEY = "AIzaSyBPiK3XOEmXg0xfSMEVUf5jltcYJlr3yfQ"
+INLINE_GEMINI_API_KEY = "###"
 DEFAULT_GEMINI_MODEL = "gemini-1.5-flash"
 
 
