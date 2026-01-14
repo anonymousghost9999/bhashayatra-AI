@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BhashaYatra AI – Your Personal Tour Assistant</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="background-aurora"></div>
+  <div class="app-shell">
+    <header class="app-header">
+      <div class="header-inner">
+        <div class="brand">
+          <div class="logo">🧭</div>
+          <h1>BhashaYatra AI</h1>
+        </div>
+        <div class="config">
+          <span id="healthDot" class="dot dot--bad" title="Backend status"></span>
+          <label for="apiBase">API:</label>
+          <input id="apiBase" type="text" value="http://localhost:8000" />
+          <button id="btnHealth" class="secondary">Check</button>
+          <span id="healthStatus" class="muted"></span>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero__container">
+        <p class="hero__eyebrow">AI tour companion</p>
+        <h2 class="hero__title">Plan smarter journeys across languages.</h2>
+        <p class="hero__copy">Bridge conversations, narrate experiences, and tailor city adventures in one unified workspace designed for multilingual travelers.</p>
+        <div class="hero__actions">
+          <button class="pill" data-quick-tab="mt">Instant Translate</button>
+          <button class="pill" data-quick-tab="voice-translate">Voice Guide</button>
+          <button class="pill" data-quick-tab="image-voice">Image Narration</button>
+          <button class="pill" data-quick-tab="itinerary">Smart Itinerary</button>
+        </div>
+        <div class="hero__stats">
+          <div class="hero__stat">
+            <span class="hero__stat-number">4</span>
+            <span class="hero__stat-label">Supported languages</span>
+          </div>
+          <div class="hero__stat">
+            <span class="hero__stat-number">5 workflows</span>
+            <span class="hero__stat-label">Translate, speak, plan &amp; more</span>
+          </div>
+          <div class="hero__stat">
+            <span class="hero__stat-number">Live health</span>
+            <span class="hero__stat-label">Use the header check anytime</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <nav class="tabs">
+      <div class="tabs__inner">
+        <button class="tab active" data-tab="mt"><span class="tab__icon">🌐</span><span class="tab__label">Translate</span></button>
+        <button class="tab" data-tab="voice-translate"><span class="tab__icon">🎙️</span><span class="tab__label">Voice Translate</span></button>
+        <button class="tab" data-tab="tts"><span class="tab__icon">🔊</span><span class="tab__label">Text to Speech</span></button>
+        <button class="tab" data-tab="image-voice"><span class="tab__icon">🖼️</span><span class="tab__label">Image to Voice</span></button>
+        <button class="tab" data-tab="itinerary"><span class="tab__icon">🗺️</span><span class="tab__label">Itinerary</span></button>
+        <button class="tab" data-tab="chat"><span class="tab__icon">💬</span><span class="tab__label">Chat</span></button>
+      </div>
+    </nav>
+
+    <main>
+      <div class="content-grid">
+        <div class="primary-column">
+          <section class="panel" data-panel="mt">
+            <h2>Translate</h2>
+            <div class="row">
+              <textarea id="mt_input" rows="3" placeholder="Enter text (<= 50 words)"></textarea>
+              <div class="hint small">Words: <span id="mt_count">0</span> / 50</div>
+            </div>
+            <div class="row language-selector">
+              <label>Source Language:</label>
+              <select id="mt_source_lang">
+                <option value="en">English</option>
+                <option value="hi">Hindi</option>
+                <option value="te">Telugu</option>
+                <option value="kn">Kannada</option>
+              </select>
+              <label>Target Language:</label>
+              <select id="mt_target_lang">
+                <option value="en">English</option>
+                <option value="hi" selected>Hindi</option>
+                <option value="te">Telugu</option>
+                <option value="kn">Kannada</option>
+              </select>
+              <button id="btnMT">Translate</button>
+            </div>
+            <pre id="mt_output" class="output output--primary"></pre>
+            <div class="row actions">
+              <button id="btnMTCopy" class="secondary">Copy</button>
+            </div>
+          </section>
+
+          <section class="panel hidden" data-panel="voice-translate">
+            <h2>Voice Translate</h2>
+            <div class="row">
+              <div class="dropzone" id="voice_drop">Drop WAV here or click to select
+                <input id="voice_file" type="file" accept="audio/wav" />
+              </div>
+            </div>
+
+            <div class="row recbar">
+              <button id="voiceRecStart">Start Recording</button>
+              <button id="voiceRecStop" class="secondary" disabled>Stop</button>
+              <button id="voiceRecUse" class="secondary" disabled>Use Recording</button>
+              <span id="voiceRecStatus" class="muted">Mic idle</span>
+            </div>
+            <audio id="voiceRecPreview" controls class="audio hidden"></audio>
+
+            <div class="row language-selector">
+              <label>Audio Language:</label>
+              <select id="voice_source_lang">
+                <option value="en" selected>English</option>
+                <option value="hi">Hindi</option>
+                <option value="te">Telugu</option>
+                <option value="kn">Kannada</option>
+              </select>
+              <label>Output Language:</label>
+              <select id="voice_target_lang">
+                <option value="en">English</option>
+                <option value="hi" selected>Hindi</option>
+                <option value="te">Telugu</option>
+                <option value="kn">Kannada</option>
+              </select>
+              <label>Voice Gender:</label>
+              <select id="voice_gender">
+                <option value="female">Female</option>
+                <option value="male" selected>Male</option>
+              </select>
+              <button id="btnVoiceTranslate">Translate Voice</button>
+            </div>
+            <pre id="voice_output" class="output"></pre>
+            <audio id="voice_audio" controls class="audio hidden"></audio>
+            <div class="row actions">
+              <button id="btnVoiceCopy" class="secondary">Copy Text</button>
+              <button id="btnVoiceDownload" class="secondary">Download Audio</button>
+            </div>
+          </section>
+
+          <section class="panel hidden" data-panel="tts">
+            <h2>Text to Speech</h2>
+            <div class="row">
+              <textarea id="tts_input" rows="3" placeholder="Enter text to convert to speech (<= 30 words)"></textarea>
+              <div class="hint small">Words: <span id="tts_count">0</span> / 30</div>
+            </div>
+            <div class="row language-selector">
+              <label>Text Language:</label>
+              <select id="tts_source_lang">
+                <option value="en" selected>English</option>
+                <option value="hi">Hindi</option>
+                <option value="te">Telugu</option>
+                <option value="kn">Kannada</option>
+              </select>
+              <label>Speech Language:</label>
+              <select id="tts_target_lang">
+                <option value="en" selected>English</option>
+                <option value="hi">Hindi</option>
+                <option value="te">Telugu</option>
+                <option value="kn">Kannada</option>
+              </select>
+              <label>Voice Gender:</label>
+              <select id="tts_voice_gender">
+                <option value="female">Female</option>
+                <option value="male" selected>Male</option>
+              </select>
+              <button id="btnTTS">Generate Speech</button>
+            </div>
+            <audio id="tts_audio" controls class="audio hidden"></audio>
+            <div class="row actions">
+              <button id="btnTTSDownload" class="secondary">Download Audio</button>
+            </div>
+          </section>
+
+          <section class="panel hidden" data-panel="image-voice">
+            <h2>Image to Voice</h2>
+            <div class="row">
+              <div class="dropzone" id="image_voice_drop">Drop JPG/PNG here or click to select
+                <input id="image_voice_file" type="file" accept="image/png, image/jpeg" />
+              </div>
+            </div>
+            <div class="row language-selector">
+              <label>Text Language in Image:</label>
+              <select id="image_voice_source_lang">
+                <option value="en" selected>English</option>
+                <option value="hi">Hindi</option>
+                <option value="te">Telugu</option>
+                <option value="kn">Kannada</option>
+              </select>
+              <label>Output Language:</label>
+              <select id="image_voice_target_lang">
+                <option value="en">English</option>
+                <option value="hi" selected>Hindi</option>
+                <option value="te">Telugu</option>
+                <option value="kn">Kannada</option>
+              </select>
+              <label>Voice Gender:</label>
+              <select id="image_voice_gender">
+                <option value="female">Female</option>
+                <option value="male" selected>Male</option>
+              </select>
+              <button id="btnImageVoice">Convert to Voice</button>
+            </div>
+            <pre id="image_voice_output" class="output"></pre>
+            <audio id="image_voice_audio" controls class="audio hidden"></audio>
+            <div class="row actions">
+              <button id="btnImageVoiceCopy" class="secondary">Copy Text</button>
+              <button id="btnImageVoiceDownload" class="secondary">Download Audio</button>
+            </div>
+          </section>
+
+          <section class="panel hidden" data-panel="itinerary">
+            <h2>Itinerary</h2>
+            <div class="row grid">
+              <input id="iti_destination" type="text" placeholder="Destination (e.g., Jaipur)" />
+              <input id="iti_days" type="number" min="1" max="14" value="2" />
+              <input id="iti_interests" type="text" placeholder="Interests (comma-separated)" />
+              <input id="iti_target_lang" type="text" value="en" placeholder="Target lang (e.g., en)" />
+              <label><input id="iti_speak" type="checkbox" /> Speak</label>
+            </div>
+            <div class="row">
+              <button id="btnIti">Generate</button>
+            </div>
+            <pre id="iti_output" class="output"></pre>
+            <div class="row actions">
+              <button id="btnItiCopy" class="secondary">Copy Itinerary</button>
+              <button id="btnItiTranCopy" class="secondary">Copy Translated</button>
+            </div>
+            <audio id="iti_audio" controls class="audio hidden"></audio>
+          </section>
+
+          <section class="panel hidden" data-panel="chat">
+            <h2>Chat</h2>
+            <div class="row grid">
+              <input id="chat_target_lang" type="text" value="en" placeholder="Target lang" />
+              <label><input id="chat_speak" type="checkbox" /> Speak</label>
+            </div>
+            <div class="row">
+              <textarea id="chat_text" rows="2" placeholder="Ask a question..."></textarea>
+            </div>
+            <div class="row">
+              <button id="btnChat">Send</button>
+            </div>
+            <pre id="chat_output" class="output"></pre>
+            <div class="row actions">
+              <button id="btnChatCopy" class="secondary">Copy Reply</button>
+            </div>
+            <audio id="chat_audio" controls class="audio hidden"></audio>
+          </section>
+        </div>
+
+        <aside class="sidebar">
+          <section class="side-card status-card">
+            <h3>Service Snapshot</h3>
+            <ul class="status-list">
+              <li><span>Text translation</span><span class="status-tag status-tag--ready">Ready</span></li>
+              <li><span>Speech workflows</span><span class="status-tag status-tag--beta">Preview</span></li>
+              <li><span>Image narration</span><span class="status-tag status-tag--ready">Ready</span></li>
+              <li><span>Conversational chat</span><span class="status-tag status-tag--labs">Experimental</span></li>
+            </ul>
+            <p class="status-footnote muted">Use the header check to confirm backend reachability before running tasks.</p>
+          </section>
+
+          <section class="side-card highlights-card">
+            <h3>Workflow Highlights</h3>
+            <ul class="quick-list">
+              <li>Mix and match voice, text, and image tasks without leaving the workspace.</li>
+              <li>Switch panels instantly via the quick links above or keyboard focus.</li>
+              <li>Outputs stay handy until you refresh, so you can copy or replay later.</li>
+            </ul>
+          </section>
+
+          <section class="notes side-card">
+            <h3>Setup Tips</h3>
+            <ul>
+              <li>Serve this page via: python -m http.server 5500 -d web</li>
+              <li>Add http://localhost:5500 to ALLOWED_ORIGINS in backend/.env</li>
+              <li>Constraints: Translate ≤ 50 words • Text to Speech ≤ 30 words • Speech to Text ≤ 5MB WAV (~≤20s) • Read Image JPG/PNG ≤ 5MB</li>
+            </ul>
+          </section>
+        </aside>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast"></div>
+  <div id="spinner" class="spinner hidden"></div>
+  <script src="app.js"></script>
+</body>
+</html>

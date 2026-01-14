@@ -1,0 +1,14 @@
+# Windows, Python, Node, env files, build artifacts
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+*.sqlite3
+.env
+
+# Node
+frontend/node_modules/
+frontend/.env.local
+frontend/dist/
